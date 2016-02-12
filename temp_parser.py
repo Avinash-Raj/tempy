@@ -36,19 +36,20 @@ with open('/home/gemini/projects/tempy/f.py') as fil:
         tags_and_spaces.extend(re.findall(r'^(\s*)(.*)', tag))
 
     tags_and_spaces = [(len(i[0]),i[1]) for i in tags_and_spaces]
-    out_html = ''
+    out_html_diag = ''
     i = 0
     for index, tag in tags_and_spaces:
         if index == i:
-            out_html += ',' + tag
+            out_html_diag += ',' + tag
         elif index < i:
             i = index
-            out_html += '|' + [i[1] for i in tags_and_spaces if i[0] < index][-1] + '->' + tag
+            out_html_diag += '|' + [i[1] for i in tags_and_spaces if i[0] < index][-1] + '->' + tag
         else:
             i = index
-            out_html += '->'  + tag
+            out_html_diag += '->'  + tag
 
-    print out_html
+    print out_html_diag
+    print tags_and_spaces
 
 
     '''After sorting'''
@@ -58,10 +59,22 @@ with open('/home/gemini/projects/tempy/f.py') as fil:
         d.append((key, [i[1] for i in group]))
 
     tag_only_html = ''
-    num = 0
+    previous_tag = ''
     for index, tags in d:
         print index
-        for tag in tags:
-            print Helpers.extract_attributes(tag)
+        for i,tag in enumerate(tags):
+            if i == 0:
+                out_tag = Helpers.extract_attributes(tag)
+                previous_tag = re.sub(r'\.(.*)', r'(\1):', re.search(r'\{\[ (.*?) \]\}', out_tag).group(1))
+                tag_only_html = out_tag
+            elif re.search(re.escape(previous_tag) + '->'  + re.escape(tag), out_html_diag):
+                print 'Direct child'
+                tag_only_html.replace(previous_tag, tag)
+            elif re.search(re.escape(previous_tag) + '->[^|]*->'  + re.escape(tag), out_html_diag):
+                print 'Indirect Child'
+
+
+
+    print tag_only_html
 
 

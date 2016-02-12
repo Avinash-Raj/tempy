@@ -10,8 +10,8 @@ class Helpers:
 			x, tag, argumnets = args
 			splitted_args = re.split(r"\s*,\s*(?=\w+='.*?')", argumnets)
 			if len(splitted_args) == 1:
-				return '<' + tag + ' '  + splitted_args[0] + '>' + '{[ ' + tag + '.' + splitted_args[0] + ' ]}' + '</' + tag + '>'
-			return '<' + tag + ' ' + ' '.join(splitted_args) + '>' + '{[ ' + tag + '.' + ','.join(splitted_args) + ' ]}' + '</' + tag + '>'
+				return '<' + tag + ' '  + splitted_args[0] + '>\n' + '{[ ' + tag + '.' + splitted_args[0] + ' ]}' + '\n</' + tag + '>'
+			return '<' + tag + ' ' + ' '.join(splitted_args) + '>\n' + '{[ ' + tag + '.' + ','.join(splitted_args) + ' ]}' + '\n</' + tag + '>'
 
 		return '<' + args[1] + '>' + '{[ ' + args[1] + ' ]}' + '</' + args[1] + '>'
 
