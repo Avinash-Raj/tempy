@@ -8,9 +8,18 @@ from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from tempy.helpers import Helpers
 
-def find_tag_content(tag, lis):
-    print tag
-    print lis
+def find_tag_content(tags, lis):
+    l = {}
+    for tag in tags:
+        for index, ta in enumerate(lis):
+            converted_tag = re.sub(r'\.(.*)',r'(\1)' , tag)
+            if ta.endswith(converted_tag + ':'):
+                l.update({tag: lis[index+1]})
+                break
+
+    return l
+
+
 
 
 with open('/home/avinash/projects/tempy/f.pyt') as fil:
@@ -91,4 +100,8 @@ with open('/home/avinash/projects/tempy/f.pyt') as fil:
 
     #print remove_redundant_tags
     remaining_tags = re.findall(r'\{\[ (.*?) \]\}', remove_redundant_tags)
-    find_tag_content(remaining_tags, tag_seperation)
+    tag_contents = find_tag_content(remaining_tags, tag_seperation)
+
+    resultant_html = re.sub(r'\{\[ (.*?) \]\}', lambda m: tag_contents[m.group(1)], remove_redundant_tags)
+
+    print resultant_html
