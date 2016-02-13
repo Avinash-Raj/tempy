@@ -25,9 +25,12 @@ html(lang='en'):
 ```
 
 From the above file you may able to find out all the relationships of a particular tag. Lets take, `body` tag. Parent of this tag is 
-`html` and the brother of this tag is `head`. It has one child tag called `h1`.
+`html`, brother `head` and a child tag called `h1`.
 
 
+## How to run?
 
-
-
+```bash
+$ python parser.py /path/to/pyt/file > ~/Desktop/out.html
+```
+Resultant `out.html` file is stored on your desktop. 
