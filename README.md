@@ -4,7 +4,7 @@ but for the one who loves python's indentation.
 
 First you need to create a `.pyt` file which looks like a regular python file.
 
-## A sample `pyt` looks like below.
+#### A sample `pyt` looks like below.
 
 ```Python
 '''
@@ -28,7 +28,7 @@ From the above file you may able to find out all the relationships of a particul
 `html`, brother `head` and a child tag called `h1`.
 
 
-## How to run?
+### How to run?
 
 1. Clone or download this repository. 
 2. Move into the cloned `tempy` folder from terminal.
