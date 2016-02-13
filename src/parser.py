@@ -3,10 +3,12 @@ pytemplate parser which converts python like code to html
 '''
 import re
 from itertools import groupby
-import sys
-from os import path
-sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
-from tempy.helpers import Helpers
+
+if __name__ == '__main__' and __package__ is None:
+    from os import sys, path
+    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
+from Helpers.helpers import ParseHelper
 
 file_name = sys.argv[1]
 
@@ -72,7 +74,7 @@ with open(file_name) as fil:
     for index, tags in tags_in_same_depth:
         
         for tag in tags:
-            ptag_tag.append((Helpers.find_parent(tag, out_html_diag), tag))
+            ptag_tag.append((ParseHelper.find_parent(tag, out_html_diag), tag))
 
     # print ptag_tag
     tags_having_common_parent = [(key, [i[1] for i in group]) for key, group in groupby(ptag_tag, lambda x: x[0])]
@@ -83,9 +85,9 @@ with open(file_name) as fil:
     for parent, tags in tags_having_common_parent[:-1]:
         final_html = ''
         for tag in tags:
-            final_html += Helpers.extract_attributes(tag)
+            final_html += ParseHelper.extract_attributes(tag)
         if parent:
-            parent_html = Helpers.extract_attributes(parent)
+            parent_html = ParseHelper.extract_attributes(parent)
             final_html = re.sub(r'\{\[ .*? \]\}', final_html, parent_html)
             final_html_dict[parent] = final_html
 
