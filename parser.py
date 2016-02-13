@@ -8,6 +8,8 @@ from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from tempy.helpers import Helpers
 
+file_name = sys.argv[1]
+
 def find_tag_content(tags, lis):
     l = {}
     for tag in tags:
@@ -19,10 +21,7 @@ def find_tag_content(tags, lis):
 
     return l
 
-
-
-
-with open('/home/avinash/projects/tempy/f.pyt') as fil:
+with open(file_name) as fil:
     temp_file = fil.read()
     temp_file = re.sub('#.*\n?', '', temp_file)
     temp_file = temp_file.replace('"', "'")
