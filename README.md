@@ -2,7 +2,7 @@
 Parser which converts python templating file to it's corresponding html file. It's exactly similar to [Jade](http://jade-lang.com/)
 but for the one who loves python's indentation.
 
-First you need to create a `.pyt` file which looks like a regular python file.
+First you need to create a `.pyt` file which looks like a regular python file. A tag should be specified as `tag(attribute1='value', attribute2='value2'):` and the tag without attributes should be specified as `tag:`.
 
 #### A sample `pyt` looks like below.
 
@@ -24,7 +24,7 @@ html(lang='en'):
             'Pytemplate - template engine'
 ```
 
-From the above file you may able to find out all the relationships of a particular tag. Lets take, `body` tag. Parent of this tag is 
+From the above file you may able to find out ancestors, siblings of a particular tag. Lets take, `body` tag. Parent of this tag is 
 `html`, brother `head` and a child tag called `h1`.
 
 
