@@ -11,4 +11,5 @@ html(lang='en'):
                 bar(1 + 5)
              }
     body:
-        h1 = 'Pytemplate - template engine'
+        h1:
+            'Pytemplate - template engine'
