@@ -78,8 +78,9 @@ with open(file_name) as fil:
         for tag in tags:
             ptag_tag.append((ParseHelper.find_parent(tag, out_html_diag), tag, index))
     # Main change
-    tags_having_common_parent = [(key, [(i[1], i[2]) for i in group]) for key, group in groupby(ptag_tag, lambda x: x[0])]
-    print tags_having_common_parent
+    tags_having_common_parent = [(key, [str(i[2]) + i[1] for i in group]) for key, group in groupby(ptag_tag, lambda x: x[0])]
+    tags_having_common_parent_with_spaces = [(i[1], i[2]) for key, group in groupby(ptag_tag, lambda x: x[0]) for i in group]
+    #print tags_having_common_parent_with_spaces
 
     '''Building the final html'''
     final_html_dict = {}
@@ -92,18 +93,19 @@ with open(file_name) as fil:
             final_html = re.sub(r'\{\[ .*? \]\}', final_html, parent_html)
             final_html_dict[parent] = final_html
 
-    # print final_html_dict
     tags_in_same_depth_r = tags_in_same_depth[::-1]
     root_tag = tags_in_same_depth_r[0][1][0]
     root_html = final_html_dict[root_tag]
 
     final_result = re.sub(r'\{\[ (.*?) \]\}', lambda m: final_html_dict[m.group(1) + ':'], root_html)
-    remove_redundant_tags = re.sub(r'<(/?\w[^>]*)>\s*<\1>', r'<\1>', final_result)
 
-    # print remove_redundant_tags
+    remove_redundant_tags = re.sub(r'(\n? *)<(\w[^>]*)>\s*<\2>', r'\1<\2>', final_result)
+    remove_redundant_tags = re.sub(r'(\n?) *<(/\w[^>]*)>(\s*)<\2>', r'\1\3<\2>', remove_redundant_tags)
+
+    remove_redundant_tags = re.sub(r'\n\n+', r'\n', remove_redundant_tags)
     remaining_tags = re.findall(r'\{\[ (.*?) \]\}', remove_redundant_tags)
     tag_contents = find_tag_content(remaining_tags, tag_seperation)
 
     resultant_html = re.sub(r'\{\[ (.*?) \]\}', lambda m: tag_contents[m.group(1)], remove_redundant_tags)
-
     print resultant_html
+

@@ -8,15 +8,25 @@ class ParseHelper:
     @classmethod
     def build_tag(*args):
         if len(args) > 2:
-            x, tag, argumnets = args
-            splitted_args = re.split(r"\s*,\s*(?=\w+='.*?')", argumnets)
-            if len(splitted_args) == 1:
-                return '<' + tag + ' ' + splitted_args[0] + '>\n' + '{[ ' + tag + '.' + splitted_args[
-                    0] + ' ]}' + '\n</' + tag + '>\n'
-            return '<' + tag + ' ' + ' '.join(splitted_args) + '>\n' + '{[ ' + tag + '.' + ','.join(
-                splitted_args) + ' ]}' + '\n</' + tag + '>\n'
+            x, tags, argumnets = args
+            if re.findall(r'^(\d+)(.+)', tags):
+                space, tag = re.findall(r'^(\d+)(.+)', tags)[0]
+                space = int(space)
+                splitted_args = re.split(r"\s*,\s*(?=\w+='.*?')", argumnets)
+                if len(splitted_args) == 1:
+                    return ' ' * space + '<' + tag + ' ' + splitted_args[0] + '>\n' + '{[ ' + tag + '.' + splitted_args[
+                    0] + ' ]}' + '\n' + ' ' * space + '</' + tag + '>\n'
+                return ' ' * space + '<' + tag + ' ' + ' '.join(splitted_args) + '>\n' + '{[ ' + tag + '.' + ','.join(
+                splitted_args) + ' ]}' + '\n' + ' ' * space + '</' + tag + '>\n'
 
-        return '<' + args[1] + '>\n' + '{[ ' + args[1] + ' ]}' + '\n</' + args[1] + '>\n'
+            return '<' + tags + '>\n' + '{[ ' + tags + ' ]}' + '\n' + ' ' + '</' + tags + '>\n'
+
+        if re.findall(r'^(\d+)(.+)', args[1]):
+            space, tag = re.findall(r'^(\d+)(.+)', args[1])[0]
+            space = int(space)
+            return ' ' * space + '<' + tag + '>\n' + '{[ ' + tag + ' ]}' + '\n' + ' ' * space + '</' + tag + '>\n'
+
+        return '<' + args[1] + '>\n' + '{[ ' + args[1] + ' ]}' + '\n' + ' ' + '</' + args[1] + '>\n'
 
     @classmethod
     def extract_attributes(cls, st):
