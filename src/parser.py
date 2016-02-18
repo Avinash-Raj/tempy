@@ -47,6 +47,7 @@ with open(file_name) as fil:
         else:
             tag_seperation.append(line)
 
+    #print tag_seperation
     tags = [i for i in tag_seperation if i.endswith(':')]
     tags_and_spaces = []
     for tag in tags:
@@ -66,7 +67,7 @@ with open(file_name) as fil:
             out_html_diag += '->' + tag
 
     # print tag_seperation
-    # print out_html_diag
+    print out_html_diag
     #print tags_and_spaces
     tags_in_same_depth = [(key, [i[1] for i in group]) for key, group in
                           groupby(sorted(tags_and_spaces, key=lambda x: x[0]), lambda x: x[0])][::-1]
@@ -107,5 +108,5 @@ with open(file_name) as fil:
     tag_contents = find_tag_content(remaining_tags, tag_seperation)
 
     resultant_html = re.sub(r'\{\[ (.*?) \]\}', lambda m: tag_contents[m.group(1)], remove_redundant_tags)
-    print resultant_html
+    #print resultant_html
 

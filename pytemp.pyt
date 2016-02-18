@@ -13,3 +13,20 @@ html(lang='en'):
     body:
         h1:
             'Pytemplate - template engine'
+        table(style='width:100%'):
+            tr:
+                td:
+                    'Jill'
+                td:
+                    'Smith'
+                td:
+                    '50'
+            tr:
+                td:
+                    'Eve'
+                td:
+                    'Jackson'
+                td:
+                    '94'
+
+
