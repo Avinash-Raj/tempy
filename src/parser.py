@@ -108,5 +108,5 @@ with open(file_name) as fil:
     tag_contents = find_tag_content(remaining_tags, tag_seperation)
 
     resultant_html = re.sub(r'\{\[ (.*?) \]\}', lambda m: tag_contents[m.group(1)], remove_redundant_tags)
-    #print resultant_html
+    print resultant_html
 

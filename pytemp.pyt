@@ -1,5 +1,6 @@
 '''
 pytemplate
+re.findall(r'(?=(?:^|\n) *(\w+(?:\([^)]*\))?:[\s\S]*?)(?=(?:^|\n)[^\n]*:))', s)
 '''
 #Hi ksjd
 html(lang='en'):
