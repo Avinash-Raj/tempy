@@ -7,9 +7,9 @@ html(lang='en'):
         title:
             "Hi , How are you?"
         script(type='text/javascript'):
-            if (foo) {
+            '''if (foo) {
                 bar(1 + 5)
-             }
+             }'''
     body:
         h1:
             'Pytemplate - template engine'
