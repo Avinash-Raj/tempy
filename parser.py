@@ -1,4 +1,5 @@
 import re
+from itertools import groupby
 
 s = """html(lang='en'):
     head:
@@ -44,12 +45,20 @@ def extract_attributes(st):
 
 
 def parse(string):
-    lis = re.findall(r'(?=(?:^|\n) *(\w+(?:\([^)]*\))?:[\s\S]*?)(?=(?:^|\n)[^\n]*:|(?s)$))', s)
+    lis = re.findall(r'(?=(?:^|\n)( *)(\w+(?:\([^)]*\))?:[\s\S]*?)(?=(?:^|\n)[^\n]*:|(?s)$))', s)
+    lis = [(len(i), j) for i,j in lis]
+    #print lis
+
+    values = [j for i,j in lis] 
     html = ''
     tags = []
     tags_with_contents = []
     other = []
-    for item in lis:
+    tags_in_same_depth = [(key, [i[1] for i in group]) for key, group in
+                          groupby(sorted(lis, key=lambda x: x[0]), lambda x: x[0])][::-1]
+    print tags_in_same_depth
+
+    for item in values:
         if item.endswith(':'):
             tags.append(item)
             tag_html = extract_attributes(item)
@@ -71,7 +80,7 @@ def parse(string):
         else:
             other.append(item)
 
-    print html
+    #print html
 
 
 
